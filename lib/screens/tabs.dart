@@ -40,10 +40,11 @@ class _TabsScreenState extends State<TabsScreen> {
         onTap: (index) {
           _selectPage(index);
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.set_meal), label: 'Categories'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites')
+              icon: const Icon(Icons.set_meal), label: activePageTitle),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.star), label: activePageTitle)
         ],
       ),
     );
