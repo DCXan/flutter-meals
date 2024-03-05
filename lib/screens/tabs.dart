@@ -27,24 +27,29 @@ class _TabsScreenState extends State<TabsScreen> {
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = const MealsScreen(title: 'Favorites', meals: []);
+      activePage = const MealsScreen(meals: []);
       activePageTitle = 'Favorites';
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tab'),
+        title: Text(activePageTitle),
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           _selectPage(index);
         },
-        items: [
+        currentIndex: _selectedPageIndex,
+        items: const [
           BottomNavigationBarItem(
-              icon: const Icon(Icons.set_meal), label: activePageTitle),
+            icon: Icon(Icons.set_meal),
+            label: 'Categories',
+          ),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.star), label: activePageTitle)
+            icon: Icon(Icons.star),
+            label: 'Favorites',
+          ),
         ],
       ),
     );
