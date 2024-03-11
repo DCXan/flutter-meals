@@ -1,16 +1,16 @@
 name: flutter_meals_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.4.10
-  google_fonts: ^6.1.0
+  google_fonts: ^6.2.0
   riverpod: ^2.5.0
   transparent_image: ^2.0.1
 
