@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_meals_app/models/meal.dart';
 import 'package:flutter_meals_app/providers/meals_provider.dart';
 import 'package:flutter_meals_app/screens/categories.dart';
 import 'package:flutter_meals_app/screens/filters.dart';
 import 'package:flutter_meals_app/screens/meals.dart';
 import 'package:flutter_meals_app/widgets/main_drawer.dart';
+import 'package:flutter_meals_app/providers/favorites_provider.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -26,31 +26,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
 
-  final List<Meal> _favoriteMeals = [];
-
   Map<Filter, bool> _selectedFilters = kInitialFilters;
-
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  void _toggleFavoriteStatus(Meal meal) {
-    final isFavoriteMeal = _favoriteMeals.contains(meal);
-
-    if (isFavoriteMeal) {
-      setState(() {
-        _favoriteMeals.remove(meal);
-        _showInfoMessage('Meal removed from Favorites');
-      });
-    } else {
-      setState(() {
-        _favoriteMeals.add(meal);
-        _showInfoMessage('Meal added to Favorites.');
-      });
-    }
-  }
 
   void _selectPage(int index) {
     setState(() {
@@ -94,16 +70,15 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }).toList();
 
     Widget activePage = CategoriesScreen(
-      onToggleFavorite: _toggleFavoriteStatus,
       availableMeals: availableMeals,
     );
 
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
+      final favoriteMeals = ref.watch(favoriteMealsProvider);
       activePage = MealsScreen(
-        meals: _favoriteMeals,
-        onToggleFavorite: _toggleFavoriteStatus,
+        meals: favoriteMeals,
       );
       activePageTitle = 'Favorites';
     }
